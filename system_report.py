@@ -1,7 +1,19 @@
 import subprocess, os
 
+
+# Colors
+RED = "\033[91m"
+GREEN = "\033[92m"
+YELLOW = "\033[93m"
+BLUE = "\033[94m"
+MAGENTA = "\033[95m"
+CYAN = "\033[96m"
+WHITE = "\033[97m"
+RESET = "\033[0m"
+BOLD = "\033[1m"
+
 date=subprocess.getoutput("date")
-print(f"-- System report ({date}) --\n")
+print(f"{BLUE}-- System report ({date}) --\n{RESET}")
 
 out = subprocess.check_output(["uptime", "-p"]).decode().strip()
 print(f"System is {out}")
@@ -14,7 +26,7 @@ print(f"Memory used is: {mem_sorted[2]} out of {mem_sorted[1]}")
 print(f"Memory use %: {(float(mem_sorted[2][:-2])/float(mem_sorted[1][:-2])*100):.2f}")
 print(f"Available memory is:  {mem_sorted[6]}")
 
-print("\n-- Disk usage report --\n")
+print(f"{GREEN}\n-- Disk usage report --\n{RESET}")
 out = subprocess.getoutput("df -h")
 line = out.split("\n")[1:]
 
@@ -37,10 +49,10 @@ for a,s,d,f in usage_list:
 print()
 
 highest = usage_list[0]
-print(f"Highest Disk usage is for: {highest[1]} - {highest[2]}/{highest[3]} with {highest[0]}%")
+print(f"{RED}Highest Disk usage is for:{RESET} {highest[1]} - {highest[2]}/{highest[3]} with {highest[0]}%")
 
 
-print("\n-- Inode usage report ---\n")
+print(f"{YELLOW}\n-- Inode usage report ---\n{RESET}")
 
 output = subprocess.getoutput("df -i")
 lines = output.split("\n")[1:]
@@ -64,4 +76,4 @@ for a,s,d,f in inode_list:
 print()
 
 highest_inodes = inode_list[0]
-print(f"Highest Inode usage is for: {highest_inodes[1]} - {highest_inodes[2]}/{highest_inodes[3]} with {highest_inodes[0]}%")
+print(f"{RED}Highest Inode usage is for:{RESET} {highest_inodes[1]} - {highest_inodes[2]}/{highest_inodes[3]} with {highest_inodes[0]}%")
