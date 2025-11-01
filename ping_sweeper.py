@@ -43,7 +43,9 @@ try:
                 name_tag = "-"
             else:
                 for tag in tags:
-                    name_tag =tag['Value']
+                    if tag['Key'] == 'Name':
+                        name_tag = tag['Value']
+                        break
             instance_details.append((instance_id, ip, name_tag ))
                     
     healthy=[]
