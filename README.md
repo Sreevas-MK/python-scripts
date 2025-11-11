@@ -8,9 +8,17 @@ These scripts use **boto3** and **SSM RunCommand** to automate, monitor, and man
 ##  Repository Structure
 
 ├── ec2/ → EC2 operations (snapshots, reports, tagging, auto-stop)
+
 ├── monitoring/ → Monitoring & alerting scripts (CloudWatch, Telegram, SSM memory)
+
 ├── ssm/ → SSM RunCommand utilities for EC2 management
-├── README.md → This file
+
+├── monitoring/ → Monitoring & alerting scripts (CloudWatch, Telegram, SSM memory)
+
+├── ssm/ → SSM RunCommand utilities for EC2 management
+
+├── README.md 
+
 └── requirements.txt → Python dependencies
 
 
@@ -42,11 +50,16 @@ Verify installation:
 python3 --version
 pip3 --version
 ```
+Install git and clone the repository
 
 ```bash
 sudo yum install git -y
 git clone https://github.com/Sreevas-MK/python-scripts.git
 cd python-scripts
+```
+
+Install all required Python libraries using:
+```bash
 pip install -r requirements.txt
 ```
 ---
