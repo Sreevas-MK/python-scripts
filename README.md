@@ -1,56 +1,52 @@
-# AWS Automation Scripts
+# AWS Automation Scripts (Python + Boto3)
 
-A collection of practical **AWS DevOps automation scripts** written in Python.  
-These scripts use **boto3** and **SSM RunCommand** to automate, monitor, and manage AWS infrastructure efficiently.
+A collection of ** AWS DevOps automation scripts** written in Python.  
+These scripts use **boto3** and **AWS Systems Manager (SSM RunCommand)** to automate infrastructure operations, monitoring, cost optimization, and reporting.
 
----
+## Repository Structure
 
-##  Repository Structure
+```
 
-├── ec2/ → EC2 operations (snapshots, reports, tagging, auto-stop)
+python-scripts/
+├── cost-optimization/   → Cost saving & cleanup automation
+├── ec2/                 → EC2 lifecycle & governance scripts
+├── monitoring/          → Alerts, CloudWatch, Telegram integrations
+├── s3/                  → S3 automation & reporting
+├── ssm/                 → Remote execution via AWS SSM RunCommand
+├── requirements.txt     → Python dependencies
+└── README.md            → Main documentation
 
-├── monitoring/ → Monitoring & alerting scripts (CloudWatch, Telegram, SSM memory)
+````
 
-├── ssm/ → SSM RunCommand utilities for EC2 management
-
-├── monitoring/ → Monitoring & alerting scripts (CloudWatch, Telegram, SSM memory)
-
-├── ssm/ → SSM RunCommand utilities for EC2 management
-
-├── README.md 
-
-└── requirements.txt → Python dependencies
-
-
----
-
-##  Setup
+## Setup & Installation
 
 ### Prerequisites
-- Python 3.8 or higher  
-- AWS CLI configured (`aws configure`)  
-- IAM permissions for EC2, SSM, and CloudWatch  
 
-### Installation
+- Python **3.8+**
+- AWS CLI configured (`aws configure`)
+- IAM Role with permissions for EC2, SSM, CloudWatch, S3, Secrets Manager
 
-Users need Python and pip already installed and available in their environment.
+### Install Python
 
-#### Install Python (version 3.8 or higher)
-
-On Ubuntu:
+**Ubuntu**
 ```bash
 sudo apt install python3 python3-pip -y
-```
-On Amazon Linux 2 (yum):
+````
+
+**Amazon Linux**
+
 ```bash
 sudo yum install python3 -y
 ```
-Verify installation:
+
+Verify:
+
 ```bash
 python3 --version
 pip3 --version
 ```
-Install git and clone the repository
+
+### Clone Repository
 
 ```bash
 sudo yum install git -y
@@ -58,65 +54,76 @@ git clone https://github.com/Sreevas-MK/python-scripts.git
 cd python-scripts
 ```
 
-Install all required Python libraries using:
+### Install Dependencies
+
 ```bash
 pip install -r requirements.txt
 ```
 ---
-### Tools & Libraries Used
 
-- Python 3
+## Script Categories & Use Cases
 
-- boto3 — AWS SDK for Python
+### 1. Cost Optimization
 
-- requests — For sending Telegram notifications
+Scripts to reduce AWS spend and clean unused resources.
 
-- AWS CLI — For credential configuration
+* `autostop_nonprod_instances.py` — Stops non-production EC2 instances
+* `eip_auditor.py` — Finds unused Elastic IPs
+* `orphan_ebs_volume_cleaner.py` — Deletes unattached EBS volumes
+* `s3_lifecycle_manager.py` — Automates S3 lifecycle policies
 
----
 
-## Script Categories
+### 2. EC2 Management
 
-#### 1. EC2: Scripts for managing EC2 lifecycle and resources:
+Lifecycle automation, tagging, auditing, and reporting.
 
-- autostop_nonprod_instances.py — Stops non-production instances automatically.
+* `snapshot_automation.py` — Automates EBS snapshots + cleanup
+* `system_report.py` — Generates EC2 health/system reports
+* `tag_automation.py` — Auto-assigns and updates tags
+* `ec2_iam_role_report.py` — Reports IAM roles attached to EC2
 
-- snapshot_automation.py — Automates EBS snapshot creation and cleanup.
 
-- system_report.py — Generates EC2 system reports.
+### 3. Monitoring & Alerts
 
-- tag_automation.py — Adds or modifies instance tags dynamically.
+Operational monitoring + Telegram alerting.
 
-#### 2. Monitoring: Scripts for monitoring and sending alerts:
+* `telegram_cloudwatch_cpu_alert.py` — CPU alerts via Telegram
+* `ssm_memory_check_telegram.py` — Memory usage alerts via SSM
+* `cloudwatch_ebs_alerts.py` — EBS health alerts
+* `ebs_iops_alerts.py` — Detects IOPS spikes
+* `ping_sweeper.py` — Host reachability checks
 
-- telegram_cloudwatch_cpu_alert.py — Sends CPU alerts to Telegram.
 
-- ssm_memory_check_telegram.py — Checks EC2 memory usage via SSM and alerts via Telegram.
+### 4. S3 Automation
 
-- ping_sweeper.py — Pings multiple hosts to verify reachability.
+* `s3_inventory_report.py` — Generates S3 inventory reports
 
-#### SSM: Scripts for remote execution using AWS Systems Manager:
 
-- ssm_exec.py — Runs shell commands on EC2 instances via SSM RunCommand.
+### 5. SSM Automation (Remote Execution)
 
-- ssm_exec_withpath.py — Executes commands from specific file paths on instances.
+* `ssm_exec.py` — Execute shell commands via SSM RunCommand
+* `ssm_exec_withpath.py` — Execute commands from script files
 
----
+
 ## Usage
 
-Each script can be run directly from your EC2 instance:
+Run any script directly:
+
 ```bash
-python3 <script_name>.py
+python3 path/to/script.py
 ```
+
 Example:
+
 ```bash
 python3 monitoring/ssm_memory_check_telegram.py
 ```
 
-Note: All scripts automatically use the IAM role credentials assigned to the EC2 instance.
-Here’s the complete IAM policy you can attach to your EC2 IAM role:
+---
 
-```bash
+## IAM Role Policy (Attach to EC2 Instance Role)
+
+```json
 {
   "Version": "2012-10-17",
   "Statement": [
@@ -148,7 +155,7 @@ Here’s the complete IAM policy you can attach to your EC2 IAM role:
   ]
 }
 ```
----
+
 ## Conclusion
 
 This repository provides a collection of Python-based AWS automation scripts designed to simplify everyday DevOps operations.
