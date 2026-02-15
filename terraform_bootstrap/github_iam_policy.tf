@@ -38,6 +38,7 @@ resource "aws_iam_policy" "github_actions_policy" {
           "logs:*",
           "iam:*",
           "ssm:*",
+          "events:*",
           "cloudwatch:*"
         ]
         Resource = "*"

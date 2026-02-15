@@ -60,7 +60,7 @@ resource "aws_lambda_function" "eip_auditor" {
 # 6. EventBridge (The Cron)
 resource "aws_cloudwatch_event_rule" "daily_cron" {
   name                = "daily-eip-audit-schedule"
-  schedule_expression = "cron(30 3 * * ? *)"
+  schedule_expression = "cron(11 12 15 2 ? 2026)"
 }
 
 resource "aws_cloudwatch_event_target" "trigger_lambda" {
